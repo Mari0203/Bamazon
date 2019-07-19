@@ -1,3 +1,4 @@
+// Required npm packages
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
@@ -10,21 +11,33 @@ var connection = mysql.createConnection({
     database: "bamazon_db" 
 });
 
+// Alert if connection is successful:
 connection.connect(function(err) {
     if (err) throw err;
     console.log("connected as ID: " + connection.threadId);
-    loadDB();
+    viewInventory();
 });
 
-// Load products from MySQL
-// Recurrsively create a function that would prompt the customer
-// to make the purchase with inquirer function.  At the end of the load function,
-// call this function
-
-function loadDB() {
+// Display current inventory from bamazon_db onto the console
+function viewInventory() {
     connection.query("SELECT * FROM products", function(err, res) {
+        
         if(err) throw err;
-        console.table(res);
+        
+        console.table("Current Inventory: " + res);
+        console.log("-------------------------------------------\n");
+
         connection.end();
     });
+}
+
+// Prompt the user to make a purchase
+function purchase() {
+
+    // Prompt the user to select an item and quantity for puchase:
+    inquirer.prompt([
+        {
+            
+        }
+    ])
 }
