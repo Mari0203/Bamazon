@@ -1,12 +1,13 @@
 // Required npm packages
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+const {printTable} = require('console-table-printer');
 
 // Conencto to MySQL DB:
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
-    username: "root",
+    user: "root",
     password: "Suppon8313",
     database: "bamazon_db" 
 });
@@ -22,22 +23,25 @@ connection.connect(function(err) {
 function viewInventory() {
     connection.query("SELECT * FROM products", function(err, res) {
         
-        if(err) throw err;
-        
-        console.table("Current Inventory: " + res);
+        if(err) {
+            console.log("ERROR: ", err)
+        }
+
+        // console.log("Current Inventory: ", res);
         console.log("-------------------------------------------\n");
+        printTable(res);
 
         connection.end();
     });
 }
 
 // Prompt the user to make a purchase
-function purchase() {
+// function purchase() {
 
-    // Prompt the user to select an item and quantity for puchase:
-    inquirer.prompt([
-        {
+//     // Prompt the user to select an item and quantity for puchase:
+//     inquirer.prompt([
+//         {
             
-        }
-    ])
-}
+//         }
+//     ])
+// }

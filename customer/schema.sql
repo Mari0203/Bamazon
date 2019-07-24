@@ -1,3 +1,5 @@
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Suppon8313';
+
 CREATE DATABASE bamazon_db;
 USE bamazon_db;
 
