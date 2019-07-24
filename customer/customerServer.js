@@ -31,17 +31,33 @@ function viewInventory() {
         console.log("-------------------------------------------\n");
         printTable(res);
 
-        connection.end();
+        purchase();
+        // connection.end();
     });
 }
 
 // Prompt the user to make a purchase
-// function purchase() {
+function purchase() {
 
-//     // Prompt the user to select an item and quantity for puchase:
-//     inquirer.prompt([
-//         {
-            
-//         }
-//     ])
-// }
+    // Prompt the user to enter Product ID to search:
+    inquirer.prompt({
+        type: "input",
+        message: "ENTER PRODUCT ID:",
+        name: "id",
+        validate: function(val) {
+            return !isNaN(val);
+        }
+    }).then(function(res) {
+        connection.query("SELECT * FROM products WHERE item_id=?", [res.id],
+        function(err, res){
+            if (err) {
+                console.log("ERROR: ", err);
+            };
+
+        console.log("PRODUCT: ", res);
+        
+        
+
+        });        
+    });
+};
