@@ -13,13 +13,13 @@ CREATE table products(
 );
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Uncharted 4", "Video Games", 49.95, 150),
-  ("DOOM", "Video Games", 59.99, 200),
-  ("Crate of Spam", "Food and Drink", 24.50, 50),
-  ("Cool Shades", "Apparel", 75.00, 5),
-  ("Worn Denim Jeans", "Apparel", 54.25, 35),
-  ("Survival Towel", "Necessities", 42.42, 42),
-  ("Bill and Ted's Excellent Adventure", "Films", 15.00, 25),
-  ("Mad Max: Fury Road", "Films", 25.50, 57),
-  ("Monopoly", "Board Games", 30.50, 35),
-  ("Yahtzee", "Board Games", 19.95, 23);
+VALUES ("Wireless Earbuds", "Electronics", 49.95, 150),
+  ("Halo", "Video Games", 59.99, 200),
+  ("Chicago Style Hot Dog Kit 16pk", "Food and Drink", 41.95, 50),
+  ("Jogger Pants", "Apparel", 34.99, 10),
+  ("Formal Evening Dress", "Apparel", 159.00, 20),
+  ("First Aid Survival Kit", "Necessities", 38.99, 30),
+  ("Inception DVD Blu-ray", "Films", 24.99, 60),
+  ("Mad Max: Fury Road DVD", "Films", 15.00, 42),
+  ("Diapers 74 ct", "Baby Products", 26.99, 80),
+  ("Curved Ultrawide LED Monitor 35inch", "Electronics", 549.99, 18);
