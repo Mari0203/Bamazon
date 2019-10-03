@@ -100,10 +100,14 @@ function purchaseItem(ID, qty) {
     }
     // Checking the inventory quantity:
     if (qty <= res[0].stock_quantity) {
-      var totalCost = res[0].price * qtyRequested;
+      var totalCost = res[0].price * qty;
 
       console.log("Great, your item is in stock!");
-      console.log("Your total cost is: " + totalCost + ". Thank you for your purchase!");
+      console.log("");
+      console.log("Your total cost is $: " + totalCost + ". Thank you for your purchase!");
+      console.log("");
+      console.log("====================");
+      console.log("");
 
       // Update the database
       connection.query("UPDATE products SET stock_quantity = stock_quantity - " + qty + "WHERE item_id = " + ID);
@@ -113,19 +117,25 @@ function purchaseItem(ID, qty) {
     }
 
     // Ask the user to exit the app
-    inquirer.prompt({
+    inquirer.prompt([{
         name: "exit",
         type: "input",
-        message: "Would you like to exit? (Y to Exit)"
-    }).then(function(userInput) {
+        message: "Would you like to exit? (Y - to exit)"
+    }]).then(function(userInput) {
         if (userInput.exit === "Y") {
-            connection.end();
-        } else {
+            exit();
+        } else 
             getInventory();
-        }
-    })
+    });
   });
 };
+
+// Exit function the quits the app and ends the database connection:
+function exit() {
+    console.log("\nTHANK YOU FOR STOPPING BY THE STORE. GOOD BYE!");
+    connection.end();
+};
+
 
 // ======= PROCESSES / CALLING FUNCTIONS ========
 getInventory();
