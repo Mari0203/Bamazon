@@ -2,7 +2,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 const { printTable } = require("console-table-printer");
-// const { Table } = require("console-table-printer");
 
 // Conencto to MySQL DB:
 var connection = mysql.createConnection({
@@ -75,7 +74,7 @@ function purchase(action = "") {
         }
       }
     ]).then(function(userInput) {
-        connection.query("SELECT * FROM products WHERE item_id=?", [userInput.ID], function(err, inventoryRes) {
+        connection.query("SELECT * FROM products WHERE item_id = ?", [userInput.ID], function(err, inventoryRes) {
           if (err) {
             console.log("ERROR: ", err);
           }
@@ -110,7 +109,7 @@ function purchaseItem(ID, qty) {
       console.log("");
 
       // Update the database
-      connection.query("UPDATE products SET stock_quantity = stock_quantity - " + qty + "WHERE item_id = " + ID);
+      connection.query("UPDATE products SET stock_quantity = stock_quantity - " + qty + " WHERE item_id = " + ID);
     } 
     else {
         console.log("I'm sorry, " + res[0].product_name + " is currently out of stock...");
@@ -119,15 +118,15 @@ function purchaseItem(ID, qty) {
     // Ask the user to either continue shopping or exit the app
     inquirer.prompt([
         {
-        name: "action",
         type: "list",
-        choices: ["View Items for Sale", "Exit"],
-        message: "Please select what would you like to do next."
+        name: "action",
+        message: "Please select what would you like to do next.",
+        choices: [ "View Items for Sale", "Leave the Store" ],
         }
     ]).then(function(userSelection) {
         if (userSelection.action === "View Items for Sales") {
             getInventory();
-        } else if (userSelection.action === "Exit") {
+        } else if (userSelection.action === "Leave the Store") {
             exit();
         }
     });
