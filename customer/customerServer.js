@@ -116,16 +116,20 @@ function purchaseItem(ID, qty) {
         console.log("I'm sorry, " + res[0].product_name + " is currently out of stock...");
     }
 
-    // Ask the user to exit the app
-    inquirer.prompt([{
-        name: "exit",
-        type: "input",
-        message: "Would you like to exit? (Y - to exit)"
-    }]).then(function(userInput) {
-        if (userInput.exit === "Y") {
-            exit();
-        } else 
+    // Ask the user to either continue shopping or exit the app
+    inquirer.prompt([
+        {
+        name: "action",
+        type: "list",
+        choices: ["View Items for Sale", "Exit"],
+        message: "Please select what would you like to do next."
+        }
+    ]).then(function(userSelection) {
+        if (userSelection.action === "View Items for Sales") {
             getInventory();
+        } else if (userSelection.action === "Exit") {
+            exit();
+        }
     });
   });
 };
