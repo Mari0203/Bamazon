@@ -21,9 +21,11 @@ connection.connect(function(err) {
     "\nYou are connected as ID# " + connection.threadId,
     "\n----------------------------------------"
   );
+  console.log("");
   console.log("*** Welcome to The Bamazon Store ***");
-  console.log("      ");
-  //   getInventory();
+  console.log("");
+  
+  getInventory();
 });
 
 // ======= FUNCTIONS ==============
@@ -99,11 +101,11 @@ function purchaseItem(ID, qty) {
     }
     // Checking the inventory quantity:
     if (qty <= res[0].stock_quantity) {
-      var totalCost = res[0].price * qty;
+      var totalCost = Math.round(res[0].price * qty).toFixed(2);
 
       console.log("Great, your item is in stock!");
       console.log("");
-      console.log("Your total cost is $: " + totalCost + ". Thank you for your purchase!");
+      console.log("Your total cost is $ " + totalCost + ". Thank you for your purchase!");
       console.log("");
       console.log("====================");
       console.log("");
@@ -124,10 +126,11 @@ function purchaseItem(ID, qty) {
         choices: [ "View Items for Sale", "Leave the Store" ],
         }
     ]).then(function(userSelection) {
-        if (userSelection.action === "View Items for Sales") {
-            getInventory();
+        if (userSelection.action === "View Items for Sale") {
+          getInventory();
+
         } else if (userSelection.action === "Leave the Store") {
-            exit();
+          exit();
         }
     });
   });
@@ -135,10 +138,15 @@ function purchaseItem(ID, qty) {
 
 // Exit function the quits the app and ends the database connection:
 function exit() {
-    console.log("\nTHANK YOU FOR STOPPING BY THE STORE. GOOD BYE!");
+    console.log(
+      "\nTHANK YOU FOR STOPPING BY THE STORE.",
+      "\nGOOD BYE!",
+      "\n--------------------"
+      );
+
     connection.end();
 };
 
 
 // ======= PROCESSES / CALLING FUNCTIONS ========
-getInventory();
+// getInventory();
