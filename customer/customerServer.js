@@ -115,8 +115,12 @@ function purchaseItem(ID, qty) {
     } 
     else {
         console.log(
-          "INVALID SELECTION: We don't have " + res[0].product_name + " in the quantity, " + res[0].qty + " selected.",
-          "\nPlease make another selection."
+          "/// INVALID SELECTION ///",
+          "\nWe don't have " + res[0].product_name + " in the quantity, " + res[0].stock_quantity + " selected.",
+          "\nPlease make another selection.",
+          "\n",
+          "\n====================",
+          "\n"
           );
     }
 
