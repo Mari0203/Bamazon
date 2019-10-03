@@ -15,21 +15,29 @@ var connection = mysql.createConnection({
 // Alert if connection is successful:
 connection.connect(function(err) {
     if (err) throw err;
-    console.log("connected as ID: " + connection.threadId);
+    console.log(
+        "----------------------------------------",
+        "\nConnection to database successful!",
+        "\nYou are connected as ID# " + connection.threadId,
+        "\n----------------------------------------"
+        );
     viewInventory();
 });
 
 // Display current inventory from bamazon_db onto the console
 function viewInventory() {
-    connection.query("SELECT * FROM products", function(err, res) {
+    connection.query("SELECT * FROM products", function(err, inventoryRes) {
         
         if(err) {
             console.log("ERROR: ", err)
         }
 
-        // console.log("Current Inventory: ", res);
-        console.log("-------------------------------------------\n");
-        printTable(res);
+        console.log("CURRENT INVENTORY: ");
+        console.log("                                         ");
+        printTable(inventoryRes);
+
+        // Adding empty space/line break between prompts
+        console.log("                                         ");
 
         purchase();
         // connection.end();
@@ -39,25 +47,26 @@ function viewInventory() {
 // Prompt the user to make a purchase
 function purchase() {
 
-    // Prompt the user to enter Product ID to search:
+    // Prompt the user to enter Product's item_id to review detail of the product:
     inquirer.prompt({
         type: "input",
-        message: "ENTER PRODUCT ID:",
+        message: "Enter the product's item ID to review detail. [Quit with Ctrl+C]",
         name: "id",
         validate: function(val) {
             return !isNaN(val);
         }
-    }).then(function(res) {
-        connection.query("SELECT * FROM products WHERE item_id=?", [res.id],
-        function(err, res){
+    }).then(function(inventoryRes) {
+        connection.query("SELECT * FROM products WHERE item_id=?", [inventoryRes.id], function(err, inventoryRes){
             if (err) {
                 console.log("ERROR: ", err);
             };
-
-        console.log("PRODUCT: ", res);
-        
-        
-
-        });        
-    });
+            console.log("                                         ");
+            console.log(
+                "====================",
+                "\nPRODUCT DETAIL: ", 
+                inventoryRes, 
+                "\n====================");
+            console.log("                                         ");
+        });    
+    });        
 };
