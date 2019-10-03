@@ -37,7 +37,7 @@ The app will show the user/customer the total cost of one's purchase when the or
     * `Leave the Store` -- will quit the app.
 
 ## App Demo Files
-![Demo video](https://drive.google.com/file/d/1YcP24jg-zeh-LIbiopX5lv2M5Bh0sTZX/view)
+![Demo video](https://user-images.githubusercontent.com/49905491/66134576-23485280-e5be-11e9-8c69-fea8b933ca40.gif)
 
 ## Technologies Used
   * JavaScript
