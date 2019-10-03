@@ -19,7 +19,7 @@ VALUES ("Wireless Earbuds", "Electronics", 49.95, 150),
   ("Jogger Pants", "Apparel", 34.99, 10),
   ("Formal Evening Dress", "Apparel", 159.00, 20),
   ("First Aid Survival Kit", "Necessities", 38.99, 30),
-  ("Inception DVD Blu-ray", "Films", 24.99, 60),
+  ("Inception DVD Blu-ray", "Films", 24.99, 10),
   ("Mad Max: Fury Road DVD", "Films", 15.00, 42),
-  ("Diapers 74 ct", "Baby Products", 26.99, 80),
-  ("Curved Ultrawide LED Monitor 35inch", "Electronics", 549.99, 18);
+  ("Diapers 74 ct", "Baby Products", 26.99, 2),
+  ("Curved Ultrawide LED Monitor 35inch", "Electronics", 549.99, 5);

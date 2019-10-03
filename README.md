@@ -23,10 +23,18 @@ The app will show the user/customer the total cost of one's purchase when the or
   Bamazon store's inventory is stored in a table, "products" in the MySQL database, called bamazon_db.  As the user makes a purchase, the invetory information is updated.
 
 ## Getting Started: How To Use the App
-1. From the "customer" folder, run `node customerServer.js` to see the inventory table.
-2. When prompted, enter `item_id` to review the detail of the chosen product.
-3. When prompted, enter the quantity that you'd like to buy.
-4. 
+1. From the "customer" folder, run `node customerServer.js` in the CLI/terminal to see the current inventory.
+2. When prompted, enter `item_id` to review Product Detail.
+3. When prompted, enter a quantity of the product you'd like to purchase.
+
+    * If the item is available for the quantity selected, the app will proceed with calculating the total cost and alert your successful purchase.  This will update the `stock_quantity` in the inventory database.
+
+    * If the item is NOT avaialble the quantity selected, the app will alert the user to make another selection.
+
+4. When purchase transaction is complete, the app will prompt the user with below 2 options for next step:
+    * `View Items for Sale` -- will allow the user to continue shopping by showing the updated iventory for the user to make another purchase selection.
+    
+    * `Leave the Store` -- will quit the app.
 
 ## App Demo Files
 * Screenshots/video Recordings:

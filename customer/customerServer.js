@@ -114,7 +114,10 @@ function purchaseItem(ID, qty) {
       connection.query("UPDATE products SET stock_quantity = stock_quantity - " + qty + " WHERE item_id = " + ID);
     } 
     else {
-        console.log("I'm sorry, " + res[0].product_name + " is currently out of stock...");
+        console.log(
+          "INVALID SELECTION: We don't have " + res[0].product_name + " in the quantity, " + res[0].qty + " selected.",
+          "\nPlease make another selection."
+          );
     }
 
     // Ask the user to either continue shopping or exit the app
