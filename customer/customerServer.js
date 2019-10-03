@@ -22,6 +22,9 @@ connection.connect(function(err) {
     "\nYou are connected as ID# " + connection.threadId,
     "\n----------------------------------------"
   );
+  console.log("*** Welcome to The Bamazon Store ***");
+  console.log("      ");
+  //   getInventory();
 });
 
 // ======= FUNCTIONS ==============
@@ -35,7 +38,7 @@ function getInventory() {
 
     console.log("CURRENT INVENTORY: ");
     printTable(inventoryRes);
-    console.log("                                         ");
+    console.log("");
 
     purchase();
   });
@@ -47,73 +50,82 @@ function purchase(action = "") {
   }
 
   // Prompt the user to enter Product's item_id to review detail of the product:
-  inquirer.prompt({
-      type: "input",
-      message: "Enter the product's item ID to review detail. [Quit with Ctrl+C]",
-      name: "id",
-      validate: function(val) {
-        return !isNaN(val);
+  inquirer.prompt([
+      {
+        name: "ID",
+        type: "input",
+        message:
+          "Enter the product's item ID to review detail. [Quit with Ctrl+C]",
+        filter: Number,
+        validate: function(val) {
+          return !isNaN(val);
+        }
+      },
+      {
+        name: "qty",
+        type: "input",
+        message: "OK, how many would you like to buy? ",
+        filter: Number,
+        validate: function(value) {
+          if (isNaN(value) == false) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       }
-    }).then(function(inventoryRes) {
-        connection.query("SELECT * FROM products WHERE item_id=?",[inventoryRes.id],function(err, inventoryRes) {
+    ]).then(function(userInput) {
+        connection.query("SELECT * FROM products WHERE item_id=?", [userInput.ID], function(err, inventoryRes) {
           if (err) {
             console.log("ERROR: ", err);
           }
-          console.log("                                         ");
+          console.log("");
           console.log(
             "====================",
             "\nPRODUCT DETAIL: ",
             inventoryRes,
             "\n===================="
           );
-          console.log("                                         ");
-        }
-      )
-
-      // Prompt the user the desired purchase count:
-      inquirer.prompt({
-          type: "input",
-          name: "qty",
-          id: inventoryRes.id,
-          message: "OK, how many would you like to buy? ",
-          validate: function(value) {
-            if (isNaN(value) == false) {
-              return true;
-            } else {
-              return false;
-            }
-          }
-        }).then(function(answer) {
-            console.log(answer);
-            // purchaseItem(answer.qty);
-        //     // Check the item inventory and alert if there's insufficient quantity left. 
-        //     if ((inventoryRes[id].stock_quantity - inventoryRes.qty) > 0) {
-        //         connection.query("UPDATE products SET stock_quantity='"+(inventoryRes[id].stock_quantity - inventoryRes.qty)+"' WHERE item_id='"+item_id+", function(err, res) {
-        //             console.log("Product bought successfully!")");
-        //     } else {
-        //         console.log("INVALID SELECTION: Not enough inventory available.");
-        //     }
+          console.log("");
+          purchaseItem(userInput.ID, userInput.qty);
         });
     });
-
   // *** This is the end of the function purchase() ***
-}
+};
 
-function purchaseItem(item_id, qty) {
-    connection.query("SELECT * FROM products WHERE item_id = " + item_id, function(err, res) {
-        if(err) {
-            console.log(err);
-        }
-        // Checking the invetory quantity:
-        if (qty <= res[0].stock_quantity) {
-            console.log("Great, your item is in stock!");
+function purchaseItem(ID, qty) {
+  connection.query("SELECT * FROM products WHERE item_id = " + ID, function(err, res) {
+    if (err) {
+      console.log(err);
+    }
+    // Checking the inventory quantity:
+    if (qty <= res[0].stock_quantity) {
+      var totalCost = res[0].price * qtyRequested;
+
+      console.log("Great, your item is in stock!");
+      console.log("Your total cost is: " + totalCost + ". Thank you for your purchase!");
+
+      // Update the database
+      connection.query("UPDATE products SET stock_quantity = stock_quantity - " + qty + "WHERE item_id = " + ID);
+    } 
+    else {
+        console.log("I'm sorry, " + res[0].product_name + " is currently out of stock...");
+    }
+
+    // Ask the user to exit the app
+    inquirer.prompt({
+        name: "exit",
+        type: "input",
+        message: "Would you like to exit? (Y to Exit)"
+    }).then(function(userInput) {
+        if (userInput.exit === "Y") {
+            connection.end();
         } else {
-            console.log("I'm sorry, it's currently out of stock...");
+            getInventory();
         }
     })
-}
+  });
+};
 
 // ======= PROCESSES / CALLING FUNCTIONS ========
 getInventory();
-
-// connection.end();
